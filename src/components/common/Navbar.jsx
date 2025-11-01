@@ -42,9 +42,7 @@ const Navbar = () => {
 					{/* Theme Toggle Button */}
 					<div
 						className="tooltip tooltip-bottom"
-						data-tip={`${
-							theme === LIGHT_THEME ? "Dark" : "Light"
-						} Mode`}
+						data-tip="Switch Theme"
 					>
 						<button
 							onClick={toggleTheme}

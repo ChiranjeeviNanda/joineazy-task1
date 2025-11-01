@@ -26,7 +26,6 @@ import {
 	Send,
 	FileText,
 	LayoutDashboard,
-	X,
 } from "lucide-react";
 
 const AdminDashboardPage = () => {
@@ -60,15 +59,25 @@ const AdminDashboardPage = () => {
 		[allUsers]
 	);
 
-	const totalAssignments = assignments.length;
-
-	const totalSubmitted = useMemo(() => {
-		return submissions.filter((sub) => sub.isSubmitted).length;
-	}, [submissions]);
-
+	// Filter assignments created by the current admin
 	const adminAssignments = useMemo(() => {
 		return assignments.filter((a) => a.adminId === currentUser.id);
 	}, [assignments, currentUser.id]);
+
+	const totalAssignmentsByAdmin = adminAssignments.length;
+
+	// Get a list of IDs for assignments created by the admin
+	const adminAssignmentIds = useMemo(() => {
+		return adminAssignments.map((a) => a.id);
+	}, [adminAssignments]);
+
+	// Calculate total submitted for the admin's assignments only
+	const totalSubmittedToAdminAssignments = useMemo(() => {
+		return submissions.filter(
+			(sub) =>
+				sub.isSubmitted && adminAssignmentIds.includes(sub.assignmentId)
+		).length;
+	}, [submissions, adminAssignmentIds]);
 
 	/**
 	 * Returns submission statistics for a specific assignment:
@@ -118,10 +127,10 @@ const AdminDashboardPage = () => {
 							Total Assignments
 						</div>
 						<div className="stat-value text-3xl sm:text-4xl">
-							{totalAssignments}
+							{totalAssignmentsByAdmin}
 						</div>
 						<div className="stat-desc text-base-content/50">
-							Created across all Admins
+							Created by you
 						</div>
 					</div>
 
@@ -148,10 +157,10 @@ const AdminDashboardPage = () => {
 							Submissions Logged
 						</div>
 						<div className="stat-value text-3xl sm:text-4xl">
-							{totalSubmitted}
+							{totalSubmittedToAdminAssignments}
 						</div>
 						<div className="stat-desc text-base-content/50">
-							Total submission confirmations received
+							Total submissions received for your tasks
 						</div>
 					</div>
 				</div>
@@ -159,7 +168,8 @@ const AdminDashboardPage = () => {
 				{/* 3. Section Title + Create Button */}
 				<div className="flex flex-col sm:flex-row justify-between items-center pb-2 border-b border-base-content/25">
 					<h2 className="text-2xl sm:text-3xl font-bold text-primary flex items-center">
-						<ClipboardList className="w-7 h-7 mr-3" /> My Assignment List
+						<ClipboardList className="w-7 h-7 mr-3" /> My Assignment
+						List
 						<span className="badge badge-lg badge-primary ml-4">
 							{adminAssignments.length}
 						</span>
@@ -177,8 +187,8 @@ const AdminDashboardPage = () => {
 					<div className="text-center p-10 bg-base-100 rounded-xl shadow-lg text-base-content/70">
 						<span className="text-lg">
 							You have not created any assignments yet. Click{" "}
-							<p className="font-bold">Create New Assignment</p> above to publish
-							your first task!
+							<p className="font-bold">Create New Assignment</p>{" "}
+							above to publish your first task!
 						</span>
 					</div>
 				) : (

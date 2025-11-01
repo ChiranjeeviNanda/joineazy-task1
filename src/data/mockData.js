@@ -37,7 +37,7 @@ export const MOCK_ASSIGNMENTS = [
 export const MOCK_SUBMISSIONS = [
   // Submissions for Assignment a1
   { assignmentId: 'a1', studentId: 's1', isSubmitted: true, submissionDate: '2025-10-30' },
-  { assignmentId: 'a1', studentId: 's2', isSubmitted: false, submissionDate: null },
+  { assignmentId: 'a1', studentId: 's2', isSubmitted: true, submissionDate: '2025-10-30' },
   { assignmentId: 'a1', studentId: 's3', isSubmitted: true, submissionDate: '2025-10-29' },
 
   // Submissions for Assignment a2

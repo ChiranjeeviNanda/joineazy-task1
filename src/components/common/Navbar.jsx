@@ -52,9 +52,9 @@ const Navbar = () => {
 							aria-label="Toggle theme"
 						>
 							{theme === LIGHT_THEME ? (
-								<Moon className="size-5" />
-							) : (
 								<Sun className="size-5" />
+							) : (
+								<Moon className="size-5" />
 							)}
 						</button>
 					</div>
